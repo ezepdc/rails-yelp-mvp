@@ -1,0 +1,36 @@
+<div class="container">
+  <p style="color: green"><%= notice %></p>
+
+  <%= render @restaurant %>
+
+  <p><strong>Reviews</strong></p>
+
+  <ul class="list-group">
+    <% @restaurant.reviews.each do |review| %>
+      <li class="list-group-item">
+        <small>
+              <% count = 0 %>
+              <% 5.times do %>
+                <% if review.rating > count %>
+                  <i class="fa-solid fa-star"></i>
+                <% else %>
+                  <i class="fa-regular fa-star"></i>
+                <% end %>
+                <% count += 1 %>
+              <% end %>
+            </small>
+        <%= review.content %>
+      </li>
+    <% end %>
+  </ul>
+  <hr>
+  <h1>New review</h1>
+  <%= simple_form_for [@restaurant, @review] do |f| %>
+    <%= f.input :rating, collection: 0..5 %>
+    <%= f.input :content %>
+    <%= f.submit "Submit review", class: "btn btn-primary" %>
+  <% end %>
+  <div>
+    <%= link_to "Back to restaurants", restaurants_path %>
+  </div>
+</div>
